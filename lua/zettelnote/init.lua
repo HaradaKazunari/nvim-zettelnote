@@ -1,5 +1,7 @@
+local util = require("zettelnote.util")
 local file = require("zettelnote.file")
 local fazzy = require("zettelnote.fazzy")
+
 local M = {
   config = {
     vault = "$HOME/.config/note/",
@@ -22,6 +24,7 @@ end
 
 local function filter_tags()
   fazzy.filtering_by_tags(M.config.vault)
+  util.grep_tag(M.config.vault)
 end
 
 function M.setup(config)
