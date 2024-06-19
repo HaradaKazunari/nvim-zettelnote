@@ -1,4 +1,3 @@
-local util = require("zettelnote.util")
 local file = require("zettelnote.file")
 local fazzy = require("zettelnote.fazzy")
 
@@ -24,7 +23,6 @@ end
 
 local function filter_tags()
   fazzy.filtering_by_tags(M.config.vault)
-  util.grep_tag(M.config.vault)
 end
 
 function M.setup(config)
@@ -32,9 +30,9 @@ function M.setup(config)
     M.config = vim.tbl_deep_extend('force', M.config, config)
   end
 
-  vim.keymap.set("n", M.config.keymap.fazzy, function() open_fazzy() end)
-  vim.keymap.set("n", M.config.keymap.new_file, function() create_new_file() end)
-  vim.keymap.set("n", M.config.keymap.filter_tags, function() filter_tags() end)
+  vim.keymap.set("n", M.config.keymap.fazzy, open_fazzy)
+  vim.keymap.set("n", M.config.keymap.new_file, create_new_file)
+  vim.keymap.set("n", M.config.keymap.filter_tags, filter_tags)
 end
 
 return M

@@ -23,13 +23,19 @@ function M.set_cursor_position(line, col)
   vim.api.nvim_win_set_cursor(win, { line, col })
 end
 
-function M.grep_tag(path)
+function M.get_grep_tag(path)
   path = M.empty_ignore(path)
   local cmd = 'rg -NIie "^  - \\\"?#?" ' .. path
   local handle = io.popen(cmd)
-  local result = handle:read("*a")
+  local input = handle:read("*a")
   handle:close()
-  return result
+  local lines = {}
+  for line in input:gmatch("[^\r\n]+") do
+    local trimmed = line:gsub("^%s*%- %s*", ""):gsub("\"", ""):gsub("#", "")
+    table.insert(lines, trimmed)
+  end
+
+  return lines
 end
 
 function M.resolce_tag(tag)
@@ -42,17 +48,6 @@ end
 
 function M.empty_ignore(str)
   return str:gsub(" ", "\\ ")
-end
-
-function M.get_buffer()
-  if cache_bufnr ~= nil and vim.fn.bufexists(cache_bufnr) then
-    return cache_bufnr
-  end
-  local buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_name(buf, 'vim-ui-input')
-  vim.api.nvim_buf_set_option(buf, 'filetype', 'vim-ui-input')
-  cache_bufnr = buf
-  return buf
 end
 
 return M
