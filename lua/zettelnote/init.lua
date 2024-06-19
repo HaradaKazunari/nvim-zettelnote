@@ -5,7 +5,8 @@ local M = {
     vault = "$HOME/.config/note/",
     keymap = {
       new_file = ";nn",
-      fazzy = ";nf"
+      fazzy = ";nf",
+      filter_tags = ";nt"
     }
   }
 }
@@ -19,6 +20,10 @@ local function open_fazzy()
   fazzy.open_note_filer(M.config.vault)
 end
 
+local function filter_tags()
+  fazzy.filtering_by_tags(M.config.vault)
+end
+
 function M.setup(config)
   if config ~= nil then
     M.config = vim.tbl_deep_extend('force', M.config, config)
@@ -26,6 +31,7 @@ function M.setup(config)
 
   vim.keymap.set("n", M.config.keymap.fazzy, function() open_fazzy() end)
   vim.keymap.set("n", M.config.keymap.new_file, function() create_new_file() end)
+  vim.keymap.set("n", M.config.keymap.filter_tags, function() filter_tags() end)
 end
 
 return M

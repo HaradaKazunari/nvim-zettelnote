@@ -27,6 +27,8 @@ require("zettelnote").setup({
   keymap = {
       new_file = ";nn",
       fazzy = ";nf"
+      filter_tags = ";nt"
   }
 })
+
 ```
