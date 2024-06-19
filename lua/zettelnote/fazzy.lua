@@ -37,6 +37,7 @@ function M.filtering_by_tags(base_path)
     initial_mode = "insert",
     previewer = true,
     theme = "dropdown",
+    prompt_prefix = "# ",
     prev_prompt = prefix,
   }
   files.live_grep(opts)
