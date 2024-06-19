@@ -1,0 +1,20 @@
+local util = require('zettelnote.util')
+local M = {}
+
+function M.add_default_propaty()
+  local id, year, month, day = util.get_date_str()
+  local date = year .. month .. day
+  local lines = {
+    "---",
+    "id: " .. id,
+    "date: " .. date,
+    "tags: ",
+    "\t- \"#\"",
+    "---",
+  }
+
+  local buf = vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+end
+
+return M
