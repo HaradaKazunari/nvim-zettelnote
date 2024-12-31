@@ -11,10 +11,6 @@ local M = {
           keymap = ';nn',
           path = ''
         },
-        {
-          keymap = ';nm',
-          path = 'mogu/'
-        },
       }
     },
     fazzy = ";nf",
