@@ -6,7 +6,8 @@ function M.get_buffer()
   return buf
 end
 
-function M.add_default_propaty()
+function M.add_default_propaty(tag)
+  tag = tag or ''
   local id, year, month, day = util.get_date_str()
   local date = year .. month .. day
   local lines = {
@@ -14,7 +15,7 @@ function M.add_default_propaty()
     "id: " .. id,
     "date: " .. date,
     "tags: ",
-    "\t- \"#\"",
+    "\t- ".. tag .."\"#\"",
     "---",
   }
 

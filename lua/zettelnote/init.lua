@@ -9,7 +9,8 @@ local M = {
       keymaps = {
         {
           keymap = ';nn',
-          path = ''
+          path = '',
+          tag = ''
         },
       }
     },
@@ -41,7 +42,12 @@ function M.setup(config)
     local keymap = v.keymap
     local folder =  v.path
     local vault = base_path .. folder
-    vim.keymap.set("n", keymap, function() create_new_file_new(vault) end)
+
+    local tag = v.tag
+    vim.keymap.set("n", keymap, function() create_new_file_new({
+      valut = vault,
+      tag = tag
+    }) end)
   end
 
   vim.keymap.set("n", M.config.fazzy, open_fazzy)
