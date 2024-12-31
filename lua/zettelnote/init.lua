@@ -4,17 +4,26 @@ local fazzy = require("zettelnote.fazzy")
 
 local M = {
   config = {
-    vault = "$HOME/.config/note/",
-    keymap = {
-      new_file = ";nn",
-      fazzy = ";nf",
-      filter_tags = ";nt"
-    }
+    vault = {
+      base_path = "$HOME/.config/note/",
+      keymaps = {
+        {
+          keymap = ';nn',
+          path = ''
+        },
+        {
+          keymap = ';nm',
+          path = 'mogu/'
+        },
+      }
+    },
+    fazzy = ";nf",
+    filter_tags = ";nt"
   }
 }
 
-local function create_new_file()
-  local path = file.create_new_note_file(M.config.vault)
+local function create_new_file_new(vault)
+  local path = file.create_new_note_file(vault)
   file.open_new_file(path)
 end
 
@@ -24,7 +33,6 @@ end
 
 local function filter_tags()
   fazzy.filtering_by_tags(M.config.vault)
-  util.grep_tag(M.config.vault)
 end
 
 function M.setup(config)
@@ -32,9 +40,16 @@ function M.setup(config)
     M.config = vim.tbl_deep_extend('force', M.config, config)
   end
 
-  vim.keymap.set("n", M.config.keymap.fazzy, function() open_fazzy() end)
-  vim.keymap.set("n", M.config.keymap.new_file, function() create_new_file() end)
-  vim.keymap.set("n", M.config.keymap.filter_tags, function() filter_tags() end)
+  for k, v in pairs(M.config.vault.keymaps) do
+    local base_path = M.config.vault.base_path
+    local keymap = v.keymap
+    local folder =  v.path
+    local vault = base_path .. folder
+    vim.keymap.set("n", keymap, function() create_new_file_new(vault) end)
+  end
+
+  vim.keymap.set("n", M.config.fazzy, open_fazzy)
+  vim.keymap.set("n", M.config.filter_tags, filter_tags)
 end
 
 return M
