@@ -11,9 +11,9 @@ function M.create_new_note_file(base_path)
   return path, filename
 end
 
-function M.open_new_file(vault)
-  vim.cmd.edit(vault.path)
-  buffer.add_default_propaty(vault.tag)
+function M.open_new_file(path ,tag)
+  vim.cmd.edit(path)
+  buffer.add_default_propaty(tag)
   util.set_cursor_position(5, 9)
 end
 

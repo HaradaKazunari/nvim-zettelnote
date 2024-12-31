@@ -20,8 +20,8 @@ local M = {
 }
 
 local function create_new_file_new(vault)
-  local path = file.create_new_note_file(vault)
-  file.open_new_file(path)
+  local path = file.create_new_note_file(vault.path)
+  file.open_new_file(path, vault.tag)
 end
 
 local function open_fazzy()
@@ -45,7 +45,7 @@ function M.setup(config)
 
     local tag = v.tag
     vim.keymap.set("n", keymap, function() create_new_file_new({
-      valut = vault,
+      path = vault,
       tag = tag
     }) end)
   end
