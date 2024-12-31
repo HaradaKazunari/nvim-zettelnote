@@ -15,7 +15,7 @@ function M.add_default_propaty(tag)
     "id: " .. id,
     "date: " .. date,
     "tags: ",
-    "\t- ".. tag .."\"#\"",
+    "\t- \"#\"".. tag,
     "---",
   }
 
