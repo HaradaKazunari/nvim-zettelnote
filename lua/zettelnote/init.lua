@@ -24,13 +24,13 @@ local function create_new_file_new(vault)
   file.open_new_file(path, vault.tag)
 end
 
-local function open_fazzy()
-  local path = M.config.vault.base_path
+local function open_fazzy(config)
+  local path = config.vault.base_path
   fazzy.open_note_filer(path)
 end
 
-local function filter_tags()
-  local path = M.config.vault.base_path
+local function filter_tags(config)
+  local path = config.vault.base_path
   fazzy.filtering_by_tags(path)
 end
 
@@ -54,8 +54,8 @@ function M.setup(config)
     end)
   end
 
-  vim.keymap.set("n", M.config.fazzy, open_fazzy)
-  vim.keymap.set("n", M.config.filter_tags, filter_tags)
+  vim.keymap.set("n", M.config.fazzy, function() open_fazzy(M.config) end)
+  vim.keymap.set("n", M.config.filter_tags, function() filter_tags(M.config) end)
 end
 
 return M
